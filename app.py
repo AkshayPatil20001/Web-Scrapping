@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 
 app = Flask(__name__)
 
@@ -26,16 +25,7 @@ def index():
     for i in range(len(nm)):
         rt.append(rating[i].text)
 
-    data = {
-        "Name": nm,
-        "Price": pr,
-        "Rating": rt
-    }
-
-    df = pd.DataFrame(data)
-    
-    # Render HTML template with the DataFrame
-    return render_template('index.html', tables=[df.to_html(classes='data')], titles=df.columns.values)
+    return render_template('index.html', names=nm, prices=pr, ratings=rt)
 
 if __name__ == '__main__':
-     app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5002)
